@@ -43,18 +43,28 @@ function showMessageModal(title, message) {
 
 // Authentication Functions
 function login() {
-    const emailInput = document.getElementById('login-email');
-    const email = emailInput.value;
+    const loginPhoneIti = window.loginPhoneIti;
+    const userType = document.getElementById('user-type').value;
 
-    // A basic email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (emailRegex.test(email)) {
-        // Simulate login process
-        showPage('user-dashboard');
-        showToast('Login successful!', 'success');
+    if (loginPhoneIti && loginPhoneIti.isValidNumber()) {
+        const phoneNumber = loginPhoneIti.getNumber();
+        console.log('Attempting to log in with phone number:', phoneNumber, 'as', userType);
+        
+        if (userType === 'admin') {
+            showPage('admin-dashboard');
+            showToast('Admin login successful!', 'success');
+            // Initialize admin map
+            initMap('admin-map');
+            // Populate incident log
+            fetchAndRenderIncidents();
+        } else {
+            showPage('user-dashboard');
+            showToast('Tourist login successful!', 'success');
+            // Initialize user map
+            initMap('map');
+        }
     } else {
-        showMessageModal('Validation Error', 'Please enter a valid email address.');
+        showMessageModal('Validation Error', 'Please enter a valid phone number.');
     }
 }
 
@@ -102,9 +112,15 @@ function showToast(message, type) {
 }
 
 // Initialize Map
-function initMap() {
+function initMap(mapId) {
+    const mapElement = document.getElementById(mapId);
+    if (!mapElement) {
+        console.error(`Map container not found: #${mapId}`);
+        return;
+    }
+
     // Default coordinates (Central Park, New York)
-    const map = L.map('map').setView([40.7812, -73.9665], 13);
+    const map = L.map(mapId).setView([40.7812, -73.9665], 13);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -290,11 +306,78 @@ async function simulateMongoDBSave(data) {
     });
 }
 
+// Admin Dashboard Logic
+function toggleIncidentLog() {
+    const logContent = document.querySelector('.incident-log-content');
+    logContent.classList.toggle('active');
+}
+
+function fetchAndRenderIncidents() {
+    const incidents = [
+        { id: 'I98765', type: 'Geo-Fencing Alert', message: 'Tourist T12345 has entered a restricted zone.', timestamp: 'Just now' },
+        { id: 'I98764', type: 'SOS Triggered', message: 'SOS signal received from Tourist T56789.', timestamp: '5 minutes ago' },
+        { id: 'I98763', type: 'Unusual Movement', message: 'AI detected unusual movement from Tourist T11223.', timestamp: '2 hours ago' },
+    ];
+    
+    const incidentList = document.getElementById('incident-list');
+    incidentList.innerHTML = '';
+    
+    incidents.forEach(incident => {
+        const li = document.createElement('li');
+        li.className = 'incident-item';
+        li.innerHTML = `
+            <h5>${incident.type} - ID: ${incident.id}</h5>
+            <p>${incident.message}</p>
+            <small>${incident.timestamp}</small>
+        `;
+        incidentList.appendChild(li);
+    });
+}
+
+function searchTourist() {
+    const touristId = document.getElementById('tourist-search').value;
+    const resultsSection = document.getElementById('search-results-section');
+    const profileCard = document.getElementById('tourist-profile-card');
+
+    if (!touristId) {
+        showMessageModal('Search Error', 'Please enter a Tourist ID to search.');
+        return;
+    }
+
+    // Simulate search and fetch data
+    console.log('Searching for tourist:', touristId);
+    profileCard.innerHTML = '<div class="spinner"></div>';
+    resultsSection.classList.remove('hidden');
+
+    setTimeout(() => {
+        const dummyTouristData = {
+            id: touristId,
+            name: 'Jane Doe',
+            country: 'Australia',
+            lastLocation: 'Eiffel Tower, Paris',
+            lastUpdated: '5 minutes ago',
+            status: 'Safe'
+        };
+
+        profileCard.innerHTML = `
+            <h4>Tourist ID: ${dummyTouristData.id}</h4>
+            <p><strong>Name:</strong> ${dummyTouristData.name}</p>
+            <p><strong>Country:</strong> ${dummyTouristData.country}</p>
+            <p><strong>Status:</strong> <span class="badge badge-success">${dummyTouristData.status}</span></p>
+            <p><strong>Last Location:</strong> ${dummyTouristData.lastLocation}</p>
+            <p><strong>Last Updated:</strong> ${dummyTouristData.lastUpdated}</p>
+        `;
+        showMessageModal('Search Complete', 'Tourist found successfully!');
+    }, 2000);
+}
+
+function generateEFIR() {
+    showMessageModal('E-FIR Generated', 'A new E-FIR has been generated and filed. Details sent to relevant authorities.');
+}
+
 
 // Initialize the application
 window.onload = function() {
-    initMap();
-    
     // Check if user is logged in (simulated)
     const isLoggedIn = false; // This would come from your authentication system
     
@@ -304,37 +387,56 @@ window.onload = function() {
         showPage('home');
     }
     
-    // Initialize international telephone inputs
+    // Initialize international telephone inputs for both signup and login forms
     const phoneInput = document.querySelector("#phone");
     const emergencyPhoneInput = document.querySelector("#emergency-phone");
+    const loginPhoneInput = document.querySelector("#login-phone");
     
-    window.iti = window.intlTelInput(phoneInput, {
-        initialCountry: "in",
-        separateDialCode: true,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-    
-    window.emergencyIti = window.intlTelInput(emergencyPhoneInput, {
-        initialCountry: "in",
-        separateDialCode: true,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    });
-    
-    // Auto-validate phone numbers as user types
-    phoneInput.addEventListener('input', function() {
-        const statusDiv = document.getElementById('phone-verification-status');
-        if (iti.isValidNumber()) {
-            statusDiv.textContent = 'Phone number format is valid';
-            statusDiv.className = 'verification-status verification-success';
-            statusDiv.style.display = 'block';
-        } else {
-            statusDiv.style.display = 'none';
-        }
-    });
+    if (phoneInput) {
+        window.iti = window.intlTelInput(phoneInput, {
+            initialCountry: "in",
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+        
+        // Auto-validate phone numbers as user types
+        phoneInput.addEventListener('input', function() {
+            const statusDiv = document.getElementById('phone-verification-status');
+            if (iti.isValidNumber()) {
+                statusDiv.textContent = 'Phone number format is valid';
+                statusDiv.className = 'verification-status verification-success';
+                statusDiv.style.display = 'block';
+            } else {
+                statusDiv.style.display = 'none';
+            }
+        });
+    }
 
+    if (loginPhoneInput) {
+        window.loginPhoneIti = window.intlTelInput(loginPhoneInput, {
+            initialCountry: "in",
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    }
+
+    if (emergencyPhoneInput) {
+        window.emergencyIti = window.intlTelInput(emergencyPhoneInput, {
+            initialCountry: "in",
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    }
+    
     const loginButton = document.querySelector('.login-btn');
     if (loginButton) {
         loginButton.addEventListener('click', login);
     }
-
+    
+    // Delay map initialization to ensure the container is visible
+    if (document.getElementById('user-dashboard').classList.contains('active')) {
+        initMap('map');
+    } else if (document.getElementById('admin-dashboard').classList.contains('active')) {
+        initMap('admin-map');
+    }
 };

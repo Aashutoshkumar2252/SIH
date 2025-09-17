@@ -409,7 +409,7 @@ nav a:hover {
     color: var(--primary);
 }
 
-#map {
+#map, #admin-map {
     height: 100%;
     border-radius: 8px;
     overflow: hidden;
@@ -487,7 +487,6 @@ nav a:hover {
     box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
     cursor: pointer;
     z-index: 99;
-    transition: all 0.3s;
     animation: pulse 2s infinite;
 }
 
@@ -797,6 +796,18 @@ footer {
     .security-features {
         grid-template-columns: 1fr;
     }
+    
+    .admin-dashboard-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .incident-log {
+        width: 100%;
+    }
 }
 
 /* Modal */
@@ -1031,6 +1042,9 @@ footer {
 .id-option i {
     font-size: 30px;
     color: var(--primary);
+}
+
+.id-option h4 {
     margin-bottom: 10px;
 }
 
@@ -1088,4 +1102,267 @@ footer {
     color: var(--primary);
     text-decoration: none;
     font-weight: 500;
+}
+
+/* New classes for refactored inline styles */
+.hero-section {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.hero-cta-box {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 40px;
+    border-radius: 16px;
+    color: white;
+}
+
+.hero-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.hero-cta-button {
+    background: white;
+    color: var(--primary);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.feature-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.feature-icon-container {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.feature-icon-container.primary-bg {
+    background: rgba(37, 99, 235, 0.1);
+}
+
+.feature-icon-container.success-bg {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.feature-icon-container.danger-bg {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.feature-icon {
+    font-size: 30px;
+}
+
+.feature-icon.primary-color {
+    color: var(--primary);
+}
+
+.feature-icon.success-color {
+    color: var(--success);
+}
+
+.feature-icon.danger-color {
+    color: var(--danger);
+}
+
+.feature-title {
+    margin-bottom: 15px;
+}
+
+.feature-description {
+    color: var(--gray);
+}
+
+.security-section,
+.map-section,
+.activities-section {
+    margin-top: 50px;
+}
+
+.map-section {
+    margin-top: 25px;
+}
+
+.activities-section {
+    margin-top: 25px;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.btn-add-contact {
+    margin-top: 15px;
+}
+
+.btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-group .btn {
+    flex: 1;
+}
+
+.modal-footer-btn {
+    text-align: right;
+    margin-top: 25px;
+}
+
+.dashboard-section.hidden {
+    display: none;
+}
+/* Styles for the phone input in login form to match the signup form */
+.auth-form .form-group .iti {
+    display: block;
+    width: 100%;
+}
+.auth-form .form-group .iti__country-list {
+    border: 2px solid var(--gray-light);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    z-index: 101;
+    max-width: 450px;
+}
+
+/* Admin Dashboard Specific Styles */
+.admin-dashboard-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
+
+.admin-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.admin-map-container {
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+#admin-map {
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+}
+
+.incident-log {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: fit-content;
+}
+
+.incident-log-header {
+    padding: 25px;
+    border-bottom: 1px solid var(--gray-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.incident-log-header h4 {
+    margin: 0;
+    color: var(--danger);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.incident-log-header .fa-chevron-right {
+    transition: transform 0.3s ease;
+}
+
+.incident-log-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+}
+
+.incident-log-content.active {
+    max-height: 500px; /* Adjust as needed */
+}
+
+.incident-log-content.active + .incident-log-header .fa-chevron-right {
+    transform: rotate(90deg);
+}
+
+#incident-list {
+    list-style: none;
+    padding: 0 25px 25px 25px;
+}
+
+.incident-item {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.incident-item:last-child {
+    border-bottom: none;
+}
+
+.incident-item h5 {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.incident-item p {
+    font-size: 14px;
+    color: var(--gray);
+    margin: 0;
+}
+
+.management-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+}
+
+#tourist-profile-card {
+    background: var(--light);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.e-fir-btn {
+    width: 100%;
 }

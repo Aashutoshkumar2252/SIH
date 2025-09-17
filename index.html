@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeTravel - Tourist Safety Monitoring System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Safe<span>Travel</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('about')">About</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                    <li><a href="#" onclick="showPage('features')">Features</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" onclick="showPage('login')">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="btn btn-primary" onclick="showPage('signup')">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="page-header">
+                <h2>Smart Tourist Safety Monitoring</h2>
+                <p>Ensuring the safety of tourists with advanced AI, Blockchain, and Geo-Fencing technologies</p>
+            </div>
+            
+            <div class="hero-section">
+                <div class="hero-cta-box">
+                    <h2 class="hero-title">Your Safety is Our Priority</h2>
+                    <p class="hero-subtitle">SafeTravel uses cutting-edge technology to ensure your journey is safe and secure, with real-time monitoring and instant emergency response.</p>
+                    <button class="btn btn-primary hero-cta-button">
+                        <i class="fas fa-download"></i> Download Our App
+                    </button>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-container primary-bg">
+                        <i class="fas fa-id-card feature-icon primary-color"></i>
+                    </div>
+                    <h3 class="feature-title">Digital Tourist ID</h3>
+                    <p class="feature-description">Blockchain-based digital IDs for tourists with KYC verification and trip itinerary.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-container success-bg">
+                        <i class="fas fa-map-marker-alt feature-icon success-color"></i>
+                    </div>
+                    <h3 class="feature-title">Geo-Fencing Alerts</h3>
+                    <p class="feature-description">Get alerts when tourists enter high-risk or restricted zones with real-time monitoring.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-container danger-bg">
+                        <i class="fas fa-bell feature-icon danger-color"></i>
+                    </div>
+                    <h3 class="feature-title">Panic Button</h3>
+                    <p class="feature-description">Instant alert system with live location sharing to nearest police and emergency contacts.</p>
+                </div>
+            </div>
+            
+            <!-- Security Features Section -->
+            <div class="security-panel security-section">
+                <h3><i class="fas fa-shield-alt"></i> Advanced Security Features</h3>
+                <div class="security-features">
+                    <div class="security-feature">
+                        <i class="fas fa-fingerprint"></i>
+                        <h4>Biometric Authentication</h4>
+                        <p>Secure login with fingerprint and facial recognition technology</p>
+                    </div>
+                    <div class="security-feature">
+                        <i class="fas fa-lock"></i>
+                        <h4>End-to-End Encryption</h4>
+                        <p>All data is encrypted in transit and at rest</p>
+                    </div>
+                    <div class="security-feature">
+                        <i class="fas fa-bell"></i>
+                        <h4>Real-time Alerts</h4>
+                        <p>Instant notifications for security breaches and emergencies</p>
+                    </div>
+                    <div class="security-feature">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h4>Location Tracking</h4>
+                        <p>GPS tracking with privacy controls and secure data handling</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h2>Login to Your Account</h2>
+                <p>Access your tourist safety dashboard</p>
+            </div>
+            
+            <div class="auth-container">
+                <div class="auth-form">
+                    <h3>Welcome Back</h3>
+                    
+                    <div class="form-group">
+                        <label for="login-phone">Phone Number</label>
+                        <input type="tel" id="login-phone" placeholder="Enter your phone number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user-type">Login as</label>
+                        <select id="user-type">
+                            <option value="tourist">Tourist</option>
+                            <option value="admin">Administrator</option>
+                            <option value="police">Police Department</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="two-factor">
+                            <h4><i class="fas fa-lock"></i> Two-Factor Authentication</h4>
+                            <input type="text" placeholder="Enter 6-digit code from authenticator app">
+                            <small>For enhanced security, please enter your 2FA code</small>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    
+                    <div class="form-footer">
+                        <p>Don't have an account? <a href="#" onclick="showPage('signup')">Sign up here</a></p>
+                        <p><a href="#">Forgot your password?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup" class="page">
+        <div class="container">
+        <div class="left-panel">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Safe<span>Travel</span></h1>
+            </div>
+            <div class="panel-content">
+                <h2>Complete Your Profile</h2>
+                <p>Join thousands of tourists who travel safely with our verified identity system. Your information is protected with bank-level security.</p>
+                
+                <ul class="features">
+                    <li>
+                        <i class="fas fa-shield-check"></i>
+                        <div>
+                            <h4>Bank-Level Security</h4>
+                            <p>Your data is encrypted and securely stored</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h4>Quick Verification</h4>
+                            <p>Get verified in minutes, not days</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h4>Global Acceptance</h4>
+                            <p>Verified with government IDs worldwide</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="progress-bar">
+                <div class="progress-step active"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+            </div>
+            
+            <div class="form-container">
+                <h2>Create Your Account</h2>
+                <p>Verify your identity for enhanced security</p>
+                
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="fullname">Full Name *</label>
+                        <input type="text" id="fullname" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <div class="input-with-verification">
+                            <div class="phone-input-container">
+                                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                            </div>
+                            <button type="button" class="verify-btn" onclick="verifyPhone()">Verify</button>
+                        </div>
+                        <div id="phone-verification-status" class="verification-status"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Select ID Type *</label>
+                        <div class="id-type-selector">
+                            <div class="id-option selected" onclick="selectIdType('aadhaar')">
+                                <i class="fas fa-id-card"></i>
+                                <h4>Aadhaar</h4>
+                                <p>Indian Residents</p>
+                            </div>
+                            <div class="id-option" onclick="selectIdType('passport')">
+                                <i class="fas fa-passport"></i>
+                                <h4>Passport</h4>
+                                <p>International</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="id-label">Aadhaar Number *</label>
+                        <div class="input-with-verification">
+                            <input type="text" id="id-number" placeholder="Enter your Aadhaar number" required>
+                            <button type="button" class="verify-btn" onclick="verifyId()">Verify</button>
+                        </div>
+                        <div id="id-verification-status" class="verification-status"></div>
+                    </div>
+                    
+                    <div class="otp-container" id="otp-container" style="display: none;">
+                        <h4>Enter Verification Code</h4>
+                        <p>We've sent a 6-digit code to your registered mobile number</p>
+                        
+                        <div class="otp-inputs">
+                            <input type="text" maxlength="1" oninput="moveToNext(this)">
+                            <input type="text" maxlength="1" oninput="moveToNext(this)">
+                            <input type="text" maxlength="1" oninput="moveToNext(this)">
+                            <input type="text" maxlength="1" oninput="moveToNext(this)">
+                            <input type="text" maxlength="1" oninput="moveToNext(this)">
+                            <input type="text" maxlength="1" oninput="moveToNext(this)">
+                        </div>
+                        
+                        <p>Didn't receive the code? <a href="#">Resend</a></p>
+                    </div>
+
+                    <div class="emergency-contact">
+                        <h3><i class="fas fa-exclamation-circle"></i> Emergency Contact</h3>
+                        <div class="form-group">
+                            <label for="emergency-name">Emergency Contact Name *</label>
+                            <input type="text" id="emergency-name" placeholder="Full name of emergency contact" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emergency-relationship">Relationship *</label>
+                            <select id="emergency-relationship" required>
+                                <option value="">Select relationship</option>
+                                <option value="parent">Parent</option>
+                                <option value="spouse">Spouse</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="friend">Friend</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emergency-phone">Emergency Contact Phone *</label>
+                            <div class="phone-input-container">
+                                <input type="tel" id="emergency-phone" placeholder="Emergency contact number" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emergency-email">Emergency Contact Email</label>
+                            <input type="email" id="emergency-email" placeholder="Emergency contact email">
+                        </div>
+                    </div>
+                    
+                    <div class="terms">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Complete Registration
+                    </button>
+                </form>
+                
+                <div class="security-note">
+                    <i class="fas fa-lock"></i>
+                    <p>Your information is encrypted and secure. We never share your data with third parties.</p>
+                </div>
+                
+                <div class="login-link">
+                    Already have an account? <a href="#">Log In</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- User Dashboard -->
+    <div id="user-dashboard" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h2>Tourist Dashboard</h2>
+                <p>Monitor your safety and travel information</p>
+            </div>
+            
+            <div class="dashboard">
+                <div class="sidebar">
+                    <div class="user-profile">
+                        <div class="user-avatar">JS</div>
+                        <div class="user-info">
+                            <h3 id="user-name">John Smith</h3>
+                            <p>Tourist ID: <span id="user-id">T56789</span></p>
+                            <div class="security-badge">
+                                <i class="fas fa-shield-alt"></i> Protected
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active" onclick="showDashboardSection('overview')"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="#" onclick="showDashboardSection('profile')"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a href="#" onclick="showDashboardSection('location')"><i class="fas fa-map-marked-alt"></i> My Location</a></li>
+                        <li><a href="#" onclick="showDashboardSection('itinerary')"><i class="fas fa-route"></i> Itinerary</a></li>
+                        <li><a href="#" onclick="showDashboardSection('alerts')"><i class="fas fa-bell"></i> Alerts</a></li>
+                        <li><a href="#" onclick="showDashboardSection('safety-score')"><i class="fas fa-shield-alt"></i> Safety Score</a></li>
+                        <li><a href="#" onclick="showDashboardSection('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </div>
+                
+                <div class="main-content">
+                    <!-- Overview Section -->
+                    <div id="overview-section" class="dashboard-section active">
+                        <div class="stats-cards">
+                            <div class="stat-card">
+                                <h3>87%</h3>
+                                <p>Safety Score</p>
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="stat-card">
+                                <h3>2</h3>
+                                <p>Active Alerts</p>
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="stat-card">
+                                <h3>5</h3>
+                                <p>Safe Zones Visated</p>
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="stat-card">
+                                <h3>12</h3>
+                                <p>Days Incident Free</p>
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="map-container map-section">
+                            <div class="map-header">
+                                <h3>My Current Location</h3>
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-sync-alt"></i> Refresh
+                                </button>
+                            </div>
+                            <div id="map"></div>
+                        </div>
+                        
+                        <div class="recent-activities activities-section">
+                            <h3>Recent Activities</h3>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h4>Entered Safe Zone</h4>
+                                        <p>You entered a designated safe zone (Central District)</p>
+                                        <small>10 minutes ago</small>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h4>Safety Alert</h4>
+                                        <p>Weather alert: Thunderstorm warning in your area</p>
+                                        <small>45 minutes ago</small>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h4>Safety Check-in</h4>
+                                        <p>You completed your daily safety check-in</p>
+                                        <small>2 hours ago</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Section -->
+                    <div id="profile-section" class="dashboard-section hidden">
+                        <div class="form-section">
+                            <h3>Personal Information</h3>
+                            <div class="form-group">
+                                <label for="profile-name">Full Name</label>
+                                <input type="text" id="profile-name" value="John Smith">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-email">Email Address</label>
+                                <input type="email" id="profile-email" value="john.smith@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-phone">Phone Number</label>
+                                <input type="tel" id="profile-phone" value="+1 (555) 123-4567">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-country">Country of Origin</label>
+                                <input type="text" id="profile-country" value="United States">
+                            </div>
+                            <button class="btn btn-primary">Update Profile</button>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>Emergency Contacts</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Relationship</th>
+                                        <th>Phone</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Sarah Smith</td>
+                                        <td>Spouse</td>
+                                        <td>+1 (555) 987-6543</td>
+                                        <td>
+                                            <button class="btn btn-info btn-small">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button class="btn btn-danger btn-small">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Michael Johnson</td>
+                                        <td>Friend</td>
+                                        <td>+1 (555) 456-7890</td>
+                                        <td>
+                                            <button class="btn btn-info btn-small">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button class="btn btn-danger btn-small">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-primary btn-add-contact">
+                                <i class="fas fa-plus"></i> Add Emergency Contact
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Other dashboard sections would be here -->
+                    <div id="location-section" class="dashboard-section hidden">
+                        <div class="form-section">
+                            <h3>Location Sharing Settings</h3>
+                            <!-- Location sharing content -->
+                        </div>
+                    </div>
+                    
+                    <div id="alerts-section" class="dashboard-section hidden">
+                        <div class="form-section">
+                            <h3>Alert Preferences</h3>
+                            <!-- Alerts content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOS Button -->
+    <div class="sos-button" onclick="triggerEmergency()">
+        <i class="fas fa-exclamation-triangle"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SafeTravel</h3>
+                    <p>Advanced tourist safety monitoring system with real-time alerts and emergency response.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Safety Ave, Security City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> support@safetravel.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 SafeTravel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Emergency Modal -->
+    <div id="emergency-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Emergency Alert</h3>
+                <button class="close-modal" onclick="closeModal('emergency-modal')">&times;</button>
+            </div>
+            <p>Are you sure you want to trigger an emergency alert? This will notify emergency services and your contacts.</p>
+            <div class="btn-group">
+                <button class="btn btn-danger" onclick="confirmEmergency()">
+                    <i class="fas fa-exclamation-triangle"></i> Trigger Emergency
+                </button>
+                <button class="btn btn-outline" onclick="closeModal('emergency-modal')">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Generic Message Modal -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="message-modal-title"></h3>
+                <button class="close-modal" onclick="closeModal('message-modal')">&times;</button>
+            </div>
+            <p id="message-modal-body"></p>
+            <div class="modal-footer-btn">
+                <button class="btn btn-primary" onclick="closeModal('message-modal')">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
